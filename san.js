@@ -9,19 +9,15 @@ const characters = [
 ];
 
 const sites = [
-  { name:'穿石庙', category:'landmark', catLabel:'核心地标', img:'chuanshi-temple', addr:'吴家店镇穿石庙村', desc:'国家级文物保护单位。1929年5月2日，中共商罗麻特别区委在此召开紧急会议，决定发动立夏节起义。穿石庙是鄂豫皖边区革命的决策原点，具有极高的历史价值。', lat:31.228, lng:115.848 },
+  { name:'穿石庙', category:'landmark', catLabel:'核心地标', img:'chuanshi-temple', addr:'吴家店镇', desc:'国家级文物保护单位。1929年5月2日，中共商罗麻特别区委在此召开紧急会议，决定发动立夏节起义。穿石庙是鄂豫皖边区革命的决策原点，具有极高的历史价值。', lat:31.228, lng:115.848 },
   { name:'立夏节起义革命烈士纪念碑', category:'landmark', catLabel:'核心地标', img:'martyr-monument', addr:'吴家店镇中心', desc:'为纪念立夏节起义及在革命战争中牺牲的吴家店籍烈士而修建。碑身庄严肃穆，是每年清明、立夏节举行公祭活动的重要场所。', lat:31.220, lng:115.850 },
-  { name:'火焰垴十八兄弟会结拜遗址', category:'uprising', catLabel:'暴动与组织旧址', img:'huoyannao-site', addr:'吴家店镇火焰垴村', desc:'起义前，周维炯等人以民间"兄弟会"形式在此秘密结社，发展革命力量。十八位骨干歃血为盟，誓言推翻反动统治，为起义积蓄了核心武装力量。', lat:31.242, lng:115.845 },
   { name:'包畈暴动旧址', category:'uprising', catLabel:'暴动与组织旧址', img:'baofan-uprising', addr:'吴家店镇包畈村', desc:'立夏节之夜，包畈暴动点由肖方、廖秉国等指挥，一举攻占当地民团驻地，缴获步枪十余支、弹药若干，是吴家店片区起义的主要暴动点之一。', lat:31.235, lng:115.832 },
   { name:'地下党组织秘密联络地（西庄徐氏祠）', category:'uprising', catLabel:'暴动与组织旧址', img:'xizhuang-xu', addr:'吴家店镇西庄村', desc:'西庄徐氏祠是立夏节起义前中共地下党组织的重要秘密联络站。起义骨干多次在此接头、传递情报、策划行动方案。', lat:31.218, lng:115.825 },
   { name:'红军枪械所旧址', category:'uprising', catLabel:'暴动与组织旧址', img:'red-army-arsenal', addr:'吴家店镇境内', desc:'红32师成立后，在吴家店建立的简易枪械修理所，为红军修理枪支、制造简易弹药，是鄂豫皖苏区早期军工事业的重要历史见证。', lat:31.225, lng:115.865 },
   { name:'红27军包家畈战斗遗址', category:'battle', catLabel:'战斗遗址', img:'baojiafan-battle', addr:'吴家店镇包家畈村', desc:'红27军在包家畈与国民党军队展开激战，红军指战员英勇奋战，以少胜多。战斗遗址至今保留有战壕遗迹。', lat:31.240, lng:115.838 },
   { name:'皮旅强越松子关战斗遗址', category:'battle', catLabel:'战斗遗址', img:'songziguan-battle', addr:'吴家店镇松子关村', desc:'皮定均旅（皮旅）在松子关一带与敌军展开激烈战斗，成功掩护主力部队转移。松子关地势险要，战斗遗址保存完好。', lat:31.195, lng:115.845 },
-  { name:'高敬亭樟树坪伏击战遗址', category:'battle', catLabel:'战斗遗址', img:'zhangshuping-battle', addr:'吴家店镇樟树坪村', desc:'高敬亭率部在樟树坪设伏，成功歼灭国民党军一个连，缴获大量武器弹药，是鄂豫皖游击战争中的经典伏击战例。', lat:31.205, lng:115.870 },
+  { name:'金寨县吴家店穿石庙烈士陵园', category:'tomb', catLabel:'烈士墓园', img:'chuanshi-cemetery', addr:'吴家店镇', desc:'穿石庙烈士陵园安葬着立夏节起义及后续革命战争中牺牲的多位英烈忠骨。陵园依山而建，松柏环绕，庄严肃穆，是吴家店镇重要的爱国主义教育基地和红色旅游瞻仰场所。', lat:31.230, lng:115.850 },
   { name:'刘邓大军竹根河驻地旧址', category:'station', catLabel:'驻地旧址', img:'zhugenhe-station', addr:'吴家店镇竹根河村', desc:'1947年刘邓大军千里跃进大别山时，所部在竹根河一带驻扎休整，当地群众踊跃支援部队，体现了军民鱼水深情。', lat:31.238, lng:115.862 },
-  { name:'红31军石佛潘氏祠驻地旧址', category:'station', catLabel:'驻地旧址', img:'shifo-pan', addr:'吴家店镇石佛村', desc:'红31军一部曾在石佛潘氏祠设立指挥部和临时医院，是红军在吴家店地区的重要驻防地点。', lat:31.200, lng:115.820 },
-  { name:'道观基烈士墓园', category:'tomb', catLabel:'烈士墓园', img:'daoguanji-tomb', addr:'吴家店镇道观基村', desc:'安葬着数十位在土地革命战争、抗日战争中牺牲的吴家店籍烈士忠骨，是重要的爱国主义教育基地。', lat:31.215, lng:115.860 },
-  { name:'东岳庙革命烈士墓', category:'tomb', catLabel:'烈士墓园', img:'dongyuemiao-tomb', addr:'吴家店镇东岳庙村', desc:'东岳庙烈士墓集中安葬了多位在立夏节起义及后续革命战争中牺牲的本地烈士，每年清明均有群众自发前来祭扫。', lat:31.198, lng:115.855 },
   { name:'罗洁故居', category:'residence', catLabel:'名人故居', img:'luojie-residence', addr:'吴家店镇境内', desc:'罗洁（1885—1942），辛亥革命先驱，早年加入同盟会，追随孙中山先生。其故居保存完好，展现了一代民主革命志士的成长足迹。', lat:31.210, lng:115.840 }
 ];
 
@@ -31,17 +27,12 @@ const martyrs = [
   { name:'周维炯', village:'吴家店村', years:'1908—1931', bio:'红11军第32师师长，起义核心领导人', type:'martyr' },
   { name:'肖方', village:'包畈村', years:'1907—1930', bio:'起义骨干，包畈暴动指挥者', type:'martyr' },
   { name:'廖秉国', village:'包畈村', years:'1903—1930', bio:'起义骨干，地下党员', type:'martyr' },
-  { name:'毛月波', village:'穿石庙村', years:'1905—1929', bio:'起义骨干，穿石庙会议参会者', type:'martyr' },
+  { name:'毛月波', village:'吴家店村', years:'1905—1929', bio:'起义骨干，穿石庙会议参会者', type:'martyr' },
   { name:'李德胜', village:'西庄村', years:'1901—1931', bio:'红军连长，黄安战役牺牲', type:'martyr' },
   { name:'张正明', village:'石佛村', years:'1908—1932', bio:'红军营教导员，第四次反围剿牺牲', type:'martyr' },
   { name:'王大江', village:'竹根河村', years:'1899—1931', bio:'赤卫队长，掩护群众转移时牺牲', type:'martyr' },
   { name:'陈树生', village:'松子关村', years:'1904—1932', bio:'红军排长，松子关战斗中牺牲', type:'martyr' },
   { name:'刘青山', village:'太平山村', years:'1907—1934', bio:'苏维埃主席，被捕后英勇就义', type:'martyr' },
-  { name:'黄继民', village:'火焰垴村', years:'1902—1930', bio:'十八兄弟会成员，起义骨干', type:'martyr' },
-  { name:'赵铁柱', village:'东岳庙村', years:'1910—1933', bio:'红军班长，鄂豫皖苏区牺牲', type:'martyr' },
-  { name:'杨秀英', village:'道观基村', years:'1912—1934', bio:'红军女护士，战地救护牺牲', type:'martyr' },
-  { name:'吴志勇', village:'樟树坪村', years:'1906—1935', bio:'游击队队长，樟树坪伏击战牺牲', type:'martyr' },
-  { name:'孙德才', village:'潘氏祠村', years:'1903—1931', bio:'红军指导员，掩护主力时牺牲', type:'martyr' },
   { name:'罗洁', village:'吴家店村', years:'1885—1942', bio:'辛亥革命先驱，同盟会会员', type:'pioneer' },
   { name:'马长顺', village:'包畈村', years:'1898—1930', bio:'农民协会负责人，组织群众支前', type:'martyr' },
   { name:'胡志强', village:'西庄村', years:'1909—1932', bio:'红军通信员，传递情报途中被捕就义', type:'martyr' },
@@ -56,7 +47,7 @@ const tourismItems = [
   { title:'楚剧团民俗文化', tag:'非遗传承', img:'chu-opera', bgImg:'chujutuan_minsu_wenhua', desc:'吴家店楚剧团传承百年，每逢节庆演出不断。楚剧以质朴的唱腔讲述历史故事与民间传说，是省级非物质文化遗产保护项目。', color:'#6a1b9a' },
   { title:'安徽省优秀旅游乡镇', tag:'发展成果', img:'tourism-township', bgImg:'anhuisheng_youxiu_lvyou_xiangzhen', desc:'吴家店镇获评"安徽省优秀旅游乡镇"称号，红色旅游基础设施不断完善，年接待游客量稳步增长，旅游产业成为乡村振兴的重要引擎。', color:'#c41e3a' },
   { title:'红色宣讲志愿服务队', tag:'精神传承', img:'volunteer-team', bgImg:'hongse_xuanjiang_zhiyuan_fuwudui', desc:'吴家店成立了由老党员、退休教师、青年志愿者组成的红色宣讲团，常年为游客和中小学生义务讲解本地革命历史，传承红色基因。', color:'#b8860b' },
-  { title:'红色村镇建设', tag:'乡村振兴', img:'red-village', bgImg:'hongse_cunzhen_jianshe', desc:'依托红色文化资源优势，吴家店大力推进红色美丽村庄建设，穿石庙村、包畈村等已建成红色文旅示范村，农文旅融合助力乡村振兴。', color:'#1b5e20' }
+  { title:'红色村镇建设', tag:'乡村振兴', img:'red-village', bgImg:'hongse_cunzhen_jianshe', desc:'依托红色文化资源优势，吴家店大力推进红色美丽村庄建设，包畈村等已建成红色文旅示范村，农文旅融合助力乡村振兴。', color:'#1b5e20' }
 ];
 
 /* ==================== NAVIGATION ==================== */
@@ -101,7 +92,7 @@ document.getElementById('scrollTop').addEventListener('click', () => window.scro
 (function(){
   const slides = document.querySelectorAll('#siteCarouselMain img');
   const placeholders = document.querySelectorAll('#siteCarouselMain .carousel-placeholder');
-  const captions = ['穿石庙旧址 — 国家级文物保护单位','穿石庙会议桌 — 1929年5月2日紧急会议文物','立夏节起义革命烈士纪念碑 — 吴家店镇','火焰垴十八兄弟会结拜遗址 — 起义前秘密结社地点'];
+  const captions = ['穿石庙旧址 — 国家级文物保护单位','穿石庙会议桌 — 1929年5月2日紧急会议文物','立夏节起义革命烈士纪念碑 — 吴家店镇'];
   const captionEl = document.getElementById('carouselCaption');
   let idx = 0;
   function showSlide(i) {
