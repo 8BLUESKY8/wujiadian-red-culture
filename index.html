@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吴家店镇 · 红色文化宣传网</title>
+<link rel="stylesheet" href="san.css">
+<!-- Leaflet CSS（交互地图，unpkg 失败时自动降级国内 CDN） -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      onerror="this.onerror=null;this.href='https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.css'" />
+</head>
+<body>
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <span class="icon">★</span>
+    <span>吴家店镇·红色文化</span>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active" data-nav="home">首页</a></li>
+    <li><a href="#uprising" data-nav="uprising">起义策源</a></li>
+    <li><a href="#sites" data-nav="sites">红色印迹</a></li>
+    <li><a href="#heroes" data-nav="heroes">英烈名录</a></li>
+    <li><a href="#study" data-nav="study">研学指南</a></li>
+    <li><a href="#memorial" data-nav="memorial">互动缅怀</a></li>
+    <li><a href="#tourism" data-nav="tourism">红旅振兴</a></li>
+  </ul>
+</nav>
+
+<!-- ==================== HOME / HERO ==================== -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-badge">★ 安徽省优秀旅游乡镇 ★</div>
+    <h1>红色吴家店</h1>
+    <h2>立夏节起义决策原点 · 豫东南革命根据地起点</h2>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">1929</div><div class="label">立夏节起义年份</div></div>
+      <div class="hero-stat"><div class="num">733</div><div class="label">建国前牺牲烈士</div></div>
+      <div class="hero-stat"><div class="num">13</div><div class="label">行政村革命遗址</div></div>
+      <div class="hero-stat"><div class="num">1</div><div class="label">国家级文保单位</div></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#uprising" class="btn btn-gold">走进穿石庙</a>
+      <a href="#memorial" class="btn btn-outline">线上缅怀</a>
+      <a href="#study" class="btn btn-red">研学指南</a>
+    </div>
+    <!-- Hero Carousel -->
+    <div class="hero-carousel" id="heroCarousel">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <div class="event-date">1929年5月2日</div>
+          <div class="event-title">穿石庙紧急会议</div>
+          <div class="event-desc">徐子清、周维炯、肖方等在穿石庙召开紧急会议，决定提前发动起义，制定多点突袭战术</div>
+        </div>
+        <div class="carousel-slide">
+          <div class="event-date">1929年5月6日（立夏节夜）</div>
+          <div class="event-title">吴家店片区多点暴动</div>
+          <div class="event-desc">立夏节之夜，吴家店各地同时发动武装暴动，一举摧毁国民党反动民团武装</div>
+        </div>
+        <div class="carousel-slide">
+          <div class="event-date">1929年5月9日</div>
+          <div class="event-title">斑竹园会师 · 红32师成立</div>
+          <div class="event-desc">各路起义队伍在斑竹园会师，正式宣布成立中国工农红军第11军第32师</div>
+        </div>
+        <div class="carousel-slide">
+          <div class="event-date">1930年—1949年</div>
+          <div class="event-title">革命火种燎原鄂豫皖</div>
+          <div class="event-desc">吴家店的星星之火发展成为鄂豫皖边区革命根据地，为中国革命作出重要贡献</div>
+        </div>
+      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 1: 起义策源 ==================== -->
+<section class="section uprising-section" id="uprising">
+  <div class="container">
+    <div class="section-header">
+      <div class="subtitle">核心标杆板块</div>
+      <h2>起义策源 · 穿石庙专题</h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- 穿石庙会议专题 -->
+    <div style="background:var(--white);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);margin-bottom:40px;">
+      <h3 style="color:var(--red-main);font-size:1.4rem;margin-bottom:20px;text-align:center;">📜 穿石庙会议（1929年5月2日）</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+        <div>
+          <h4 style="color:var(--gray-dark);margin-bottom:8px;">🏛 历史背景</h4>
+          <p style="color:var(--gray-light);font-size:0.93rem;">1929年春，商南地区（今金寨县西部）党组织活动频繁，国民党反动势力开始疯狂镇压。原定中秋节举行的武装起义面临暴露风险。在此危急关头，中共商罗麻特别区委于5月2日在吴家店镇穿石庙召开紧急会议。</p>
+        </div>
+        <div>
+          <h4 style="color:var(--gray-dark);margin-bottom:8px;">👥 参会人员</h4>
+          <p style="color:var(--gray-light);font-size:0.93rem;">徐子清（特委书记）、周维炯、肖方、徐其虚、廖秉国、毛月波等十余位起义骨干。会议在穿石庙的一间密室中进行，由徐子清主持。</p>
+        </div>
+        <div>
+          <h4 style="color:var(--gray-dark);margin-bottom:8px;">⚡ 两大核心决策</h4>
+          <p style="color:var(--gray-light);font-size:0.93rem;">
+            <strong style="color:var(--red-main);">① 提前起义时间：</strong>将原定中秋节起义提前至立夏节（5月6日）夜，趁敌人过节防备松懈之际发动突袭。<br>
+            <strong style="color:var(--red-main);">② 制定多点突袭战术：</strong>兵分多路，同时在吴家店、斑竹园、南溪等地点发动暴动，使敌人首尾不能相顾。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <h3 style="text-align:center;color:var(--gray-dark);margin-bottom:30px;font-size:1.3rem;">⏳ 立夏节起义全过程时间线</h3>
+    <div class="timeline" id="timeline">
+      <div class="timeline-item visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">1929年5月2日</div>
+          <h4>穿石庙紧急会议</h4>
+          <p>中共商罗麻特别区委在吴家店穿石庙召开紧急会议，决定提前发动起义，制定多点同时暴动计划。会议推举徐子清、周维炯为起义总指挥。</p>
+        </div>
+      </div>
+      <div class="timeline-item visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">1929年5月4日—5日</div>
+          <h4>起义前秘密准备</h4>
+          <p>各暴动点负责人分头传达会议精神，秘密集结农民武装，准备武器弹药。吴家店地区的地下党员以走亲访友为掩护，暗中联络起义力量。</p>
+        </div>
+      </div>
+      <div class="timeline-item visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">1929年5月6日（立夏节）夜</div>
+          <h4>吴家店片区多点暴动 🔥</h4>
+          <p>立夏节之夜，吴家店各地同时发动武装暴动：<strong>包家畈</strong>、<strong>火焰垴</strong>、<strong>穿石庙</strong>、<strong>西庄</strong>等暴动点位一举摧毁当地反动民团武装，缴获枪支弹药，打响了豫东南武装革命的第一枪。</p>
+        </div>
+      </div>
+      <div class="timeline-item visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">1929年5月7日—8日</div>
+          <h4>各路队伍向斑竹园集结</h4>
+          <p>吴家店、南溪、斑竹园等各地暴动得手后，起义队伍按计划向斑竹园方向会师。沿途宣传革命主张，吸收农民加入，队伍不断壮大。</p>
+        </div>
+      </div>
+      <div class="timeline-item visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">1929年5月9日</div>
+          <h4>斑竹园会师 · 红11军32师成立</h4>
+          <p>各路起义队伍在斑竹园朱氏祠胜利会师，正式宣布成立<strong>中国工农红军第11军第32师</strong>，师长周维炯，党代表徐子清。这是鄂豫皖边区第一支正规红军武装。</p>
+        </div>
+      </div>
+      <div class="timeline-item visible">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">1929年5月中旬—年底</div>
+          <h4>创建豫东南革命根据地</h4>
+          <p>红32师以吴家店、斑竹园为依托，开辟豫东南革命根据地，深入发动群众、建立苏维埃政权、开展土地革命，为后续鄂豫皖苏区的形成奠定了坚实基础。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Carousel -->
+    <div class="carousel-wrapper" id="siteCarousel">
+      <div class="carousel-main" id="siteCarouselMain">
+        <img src="images/chuanshi-temple.jpg" alt="穿石庙旧址" class="active" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+	        <div class="carousel-placeholder active" style="background:linear-gradient(135deg,#8B0000,#c41e3a);"><span class="ph-icon">🏛️</span>穿石庙旧址<span style="font-size:0.8rem;opacity:0.7;">国家级文物保护单位</span></div>
+	        <img src="images/meeting-table.jpg" alt="穿石庙会议桌" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+	        <div class="carousel-placeholder" style="background:linear-gradient(135deg,#744418,#8B6914);"><span class="ph-icon">🪑</span>穿石庙会议桌<span style="font-size:0.8rem;opacity:0.7;">1929年5月2日紧急会议文物</span></div>
+	        <img src="images/martyr-monument.jpg" alt="烈士纪念碑" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+	        <div class="carousel-placeholder" style="background:linear-gradient(135deg,#333,#555);"><span class="ph-icon">🪦</span>立夏节起义革命烈士纪念碑<span style="font-size:0.8rem;opacity:0.7;">吴家店镇·烈士纪念设施</span></div>
+	        <img src="images/huoyannao-site.jpg" alt="火焰垴遗址" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+	        <div class="carousel-placeholder" style="background:linear-gradient(135deg,#4a6741,#3a5a2a);"><span class="ph-icon">🔥</span>火焰垴十八兄弟会结拜遗址<span style="font-size:0.8rem;opacity:0.7;">起义前秘密结社地点</span></div>
+      </div>
+      <button class="carousel-btn prev" id="carouselPrev">◀</button>
+      <button class="carousel-btn next" id="carouselNext">▶</button>
+      <div class="carousel-caption" id="carouselCaption">穿石庙旧址 — 国家级文物保护单位</div>
+    </div>
+
+    <!-- 历史意义 -->
+    <div style="background:linear-gradient(135deg,var(--red-deep),var(--red-main));color:var(--white);padding:30px;border-radius:var(--radius);margin-top:40px;text-align:center;">
+      <h3 style="font-size:1.3rem;margin-bottom:14px;">🌟 历史意义</h3>
+      <p style="font-size:1rem;max-width:800px;margin:0 auto;line-height:1.9;">
+        立夏节起义是<strong>鄂豫皖边区首次取得全面胜利的武装起义</strong>，是<strong>豫东南革命根据地的起点</strong>。它成功地以最小的代价瓦解了商南地区的反动武装，创建了红32师——鄂豫皖边区第一支正规红军队伍。穿石庙会议作为起义的决策原点，见证了革命先辈在危急关头的英明决断，在中国革命史上留下了不可磨灭的印记。
+      </p>
+    </div>
+
+    <!-- Character Cards -->
+    <h3 style="text-align:center;color:var(--gray-dark);margin-top:50px;font-size:1.3rem;">🎖 起义先驱（点击头像了解生平）</h3>
+    <div class="chars-grid" id="charsGrid">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- Character Detail Modal -->
+<div class="modal-overlay" id="charModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <h3 id="modalName"></h3>
+    <div class="modal-role" id="modalRole"></div>
+    <p id="modalBio"></p>
+  </div>
+</div>
+
+<!-- ==================== SECTION 2: 红色印迹 ==================== -->
+<section class="section sites-section" id="sites">
+  <div class="container">
+    <div class="section-header">
+      <div class="subtitle">资源全景板块</div>
+      <h2>红色印迹 · 遗址地图</h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="site-tabs" id="siteTabs">
+      <button class="site-tab active" data-filter="all">全部遗址</button>
+      <button class="site-tab" data-filter="landmark">核心地标</button>
+      <button class="site-tab" data-filter="uprising">暴动与组织旧址</button>
+      <button class="site-tab" data-filter="battle">战斗遗址</button>
+      <button class="site-tab" data-filter="station">驻地旧址</button>
+      <button class="site-tab" data-filter="tomb">烈士墓园</button>
+      <button class="site-tab" data-filter="residence">名人故居</button>
+    </div>
+
+    <!-- Sites Grid -->
+    <div class="sites-grid" id="sitesGrid">
+      <!-- Generated by JS -->
+    </div>
+
+    <!-- Interactive Map -->
+    <div id="sites-map-container">
+      <h4>📍 吴家店镇红色遗址分布图（交互地图）
+        <button id="mapResetBtn" class="btn btn-red" style="display:none;font-size:0.8rem;padding:6px 16px;margin-left:12px;vertical-align:middle;letter-spacing:0;">查看全部遗址</button>
+      </h4>
+      <div id="sites-map"></div>
+      <div class="map-legend" id="mapLegend">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 3: 英烈名录 ==================== -->
+<section class="section heroes-section" id="heroes">
+  <div class="container">
+    <div class="section-header">
+      <div class="subtitle">人物致敬板块</div>
+      <h2>英烈名录 · 革命先驱</h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Search -->
+    <div class="heroes-search">
+      <input type="text" id="heroSearch" placeholder="🔍 输入姓名搜索烈士……">
+      <select id="heroVillage">
+        <option value="all">全部行政村</option>
+        <option value="吴家店村">吴家店村</option>
+        <option value="包畈村">包畈村</option>
+        <option value="西庄村">西庄村</option>
+        <option value="石佛村">石佛村</option>
+        <option value="竹根河村">竹根河村</option>
+        <option value="松子关村">松子关村</option>
+        <option value="太平山村">太平山村</option>
+        <option value="火焰垴村">火焰垴村</option>
+        <option value="东岳庙村">东岳庙村</option>
+        <option value="道观基村">道观基村</option>
+        <option value="樟树坪村">樟树坪村</option>
+        <option value="潘氏祠村">潘氏祠村</option>
+        <option value="穿石庙村">穿石庙村</option>
+      </select>
+    </div>
+
+    <!-- Heroes Grid -->
+    <div class="heroes-grid" id="heroesGrid">
+      <!-- Generated by JS -->
+    </div>
+    <div class="no-results" id="noResults" style="display:none;">未找到匹配的烈士信息，请调整搜索条件</div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 4: 研学指南 ==================== -->
+<section class="section study-section" id="study">
+  <div class="container">
+    <div class="section-header">
+      <div class="subtitle">落地服务板块</div>
+      <h2>研学指南 · 实地参观</h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Routes -->
+    <div class="routes-container">
+      <div class="route-card">
+        <h3>🕐 半日初心线</h3>
+        <div class="route-subtitle">适合党员教育、短时间参观</div>
+        <ol class="route-steps">
+          <li>
+            <div class="route-step-num">1</div>
+            <div class="step-info"><h5>穿石庙旧址</h5><span>参观约40分钟 · 国家级文保单位</span></div>
+          </li>
+          <li>
+            <div class="route-step-num">2</div>
+            <div class="step-info"><h5>立夏节起义革命烈士纪念碑</h5><span>参观约30分钟 · 敬献花篮仪式</span></div>
+          </li>
+          <li>
+            <div class="route-step-num">3</div>
+            <div class="step-info"><h5>太平山列宁小学旧址</h5><span>参观约30分钟 · 革命教育旧址</span></div>
+          </li>
+        </ol>
+      </div>
+      <div class="route-card">
+        <h3>📅 一日深度线</h3>
+        <div class="route-subtitle">适合研学旅行、深度体验</div>
+        <ol class="route-steps">
+          <li>
+            <div class="route-step-num">1</div>
+            <div class="step-info"><h5>穿石庙旧址</h5><span>参观约40分钟 · 起义策源地</span></div>
+          </li>
+          <li>
+            <div class="route-step-num">2</div>
+            <div class="step-info"><h5>包畈暴动旧址</h5><span>参观约30分钟 · 暴动遗址</span></div>
+          </li>
+          <li>
+            <div class="route-step-num">3</div>
+            <div class="step-info"><h5>松子关战斗遗址</h5><span>参观约40分钟 · 皮旅战斗遗址</span></div>
+          </li>
+          <li>
+            <div class="route-step-num">4</div>
+            <div class="step-info"><h5>罗洁故居</h5><span>参观约30分钟 · 辛亥革命先驱</span></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-icon">🕗</div>
+        <h5>开放时间</h5>
+        <p>各遗址全天免费开放<br>建议参观时间 8:00-17:00</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🎫</div>
+        <h5>免费参观</h5>
+        <p>所有红色遗址均免费<br>面向社会公众开放</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🚗</div>
+        <h5>交通指引</h5>
+        <p>自驾：G42金寨出口→吴家店镇<br>公交：金寨县城乘乡镇班车</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📋</div>
+        <h5>文明须知</h5>
+        <p>保持肃穆、爱护文物<br>禁止吸烟、文明参观</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== SECTION 5: 互动缅怀 ==================== -->
+<section class="section memorial-section" id="memorial">
+  <div class="container">
+    <div class="section-header">
+      <div class="subtitle">情感互动板块</div>
+      <h2>互动缅怀 · 致敬先烈</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="memorial-grid">
+      <!-- Flower Offering -->
+      <div class="flower-card" id="flowerCard">
+        <h3>🌺 在线献花</h3>
+        <p style="color:var(--gray-light);font-size:0.9rem;">向立夏节起义革命烈士纪念碑献花致敬</p>
+        <div class="flower-count" id="flowerCount">0</div>
+        <p class="flower-desc">已有 <strong id="flowerTotal">0</strong> 位访客献花</p>
+        <button class="flower-btn" id="flowerBtn">🕊️ 献花致敬</button>
+      </div>
+
+      <!-- Message Wall -->
+      <div class="msg-card">
+        <h3>💬 缅怀留言墙</h3>
+        <div class="msg-form" id="msgForm">
+          <textarea id="msgText" placeholder="写下您对革命先烈的缅怀寄语……" maxlength="200"></textarea>
+          <div class="msg-row">
+            <input type="text" id="msgAuthor" placeholder="您的姓名（选填）" maxlength="20">
+            <button class="btn btn-red" id="msgSubmit" style="white-space:nowrap;">提交寄语</button>
+          </div>
+        </div>
+        <div class="msg-list" id="msgList">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+
+      <!-- Quiz -->
+      <div class="quiz-card" id="quizCard">
+        <h3>📝 吴家店红色知识问答</h3>
+        <div id="quizArea">
+          <div class="quiz-question" id="quizQuestion"></div>
+          <div class="quiz-options" id="quizOptions"></div>
+          <div class="quiz-result" id="quizResult"></div>
+        </div>
+        <div class="quiz-score" id="quizScoreArea" style="display:none;">
+          <p style="color:var(--gray-light);">答题完成！你的得分：</p>
+          <div class="big-score" id="quizBigScore">0</div>
+          <p style="color:var(--gray-light);">总分 100 分</p>
+          <button class="btn btn-red quiz-next" id="quizRetry">重新答题</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 6: 红旅振兴 ==================== -->
+<section class="section tourism-section" id="tourism">
+  <div class="container">
+    <div class="section-header">
+      <div class="subtitle">融合发展板块</div>
+      <h2>红旅振兴 · 时代新篇</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="tourism-grid" id="tourismGrid">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-title">吴家店镇 · 红色文化宣传网</div>
+  <p>安徽省六安市金寨县吴家店镇 | 立夏节起义策源地 | 国家级文物保护单位穿石庙所在地</p>
+  <p>铭记历史 · 缅怀先烈 · 传承精神 · 振兴乡村</p>
+  <p style="margin-top:12px;font-size:0.8rem;color:#777;">本站所有历史资料均来源于公开史料与地方志记载 | 仅供红色文化宣传与研学教育使用</p>
+</footer>
+
+<!-- Scroll To Top -->
+<button class="scroll-top" id="scrollTop" title="回到顶部">▲</button>
+
+<!-- Leaflet JS（交互地图，unpkg 失败时自动降级国内 CDN + 彻底失败时显示提示） -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        onerror="this.onerror=null;var s=document.createElement('script');s.src='https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.js';s.onerror=function(){var el=document.getElementById('sites-map');if(el)el.innerHTML='<p style=text-align:center;padding:60px;color:#999>⚠️ 地图组件加载失败，请刷新页面重试</p>'};document.head.appendChild(s)"></script>
+
+<script src="san.js"></script>
+</body>
+</html>
