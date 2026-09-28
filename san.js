@@ -128,13 +128,16 @@ const charsGrid = document.getElementById('charsGrid');
 const charModal = document.getElementById('charModal');
 const modalClose = document.getElementById('modalClose');
 characters.forEach(c => {
-  const card = document.createElement('div'); card.className='char-card';
+  const card = document.createElement('div'); card.className='char-card'; card.setAttribute('role','button'); card.setAttribute('tabindex','0');
   card.innerHTML = `<div class="char-avatar">${c.avatar}</div><h4>${c.name}</h4><div class="role">${c.role}</div>`;
   card.addEventListener('click', () => {
     document.getElementById('modalName').textContent = c.name;
     document.getElementById('modalRole').textContent = c.role + ' | ' + c.village;
     document.getElementById('modalBio').textContent = c.bio;
     charModal.classList.add('open');
+  });
+  card.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); }
   });
   charsGrid.appendChild(card);
 });
@@ -143,14 +146,50 @@ charModal.addEventListener('click', (e) => { if(e.target===charModal) charModal.
 
 /* ==================== SITES FILTER ==================== */
 const sitesGrid = document.getElementById('sitesGrid');
+const webgisSiteList = document.getElementById('webgisSiteList');
+const webgisCount = document.getElementById('webgisCount');
+const siteSearchInput = document.getElementById('siteSearch');
+let activeSiteFilter = 'all';
+
+function filterSiteData(filter, query) {
+  const normalizedQuery = (query || '').trim().toLocaleLowerCase();
+  return sites.map((site, index) => ({ site, index })).filter(({site}) => {
+    const matchesCategory = filter === 'all' || site.category === filter;
+    const haystack = [site.name, site.catLabel, site.addr, site.desc].join(' ').toLocaleLowerCase();
+    return matchesCategory && (!normalizedQuery || haystack.includes(normalizedQuery));
+  });
+}
+
+function renderWebgisList(items) {
+  if (!webgisSiteList) return;
+  if (!items.length) {
+    webgisSiteList.innerHTML = '<div class="webgis-empty"><span>⌕</span><strong>没有找到匹配的遗址</strong><p>试试其他名称、村落或类别。</p></div>';
+    return;
+  }
+  webgisSiteList.innerHTML = items.map(({site, index}) => `
+    <button type="button" class="webgis-site-row" data-site-index="${index}" data-category="${site.category}" aria-label="在地图上定位${escapeHtml(site.name)}">
+      <span class="webgis-site-thumb"><img src="${IMAGE_URLS[`${site.img}.jpg`]}" alt="" loading="lazy"></span>
+      <span class="webgis-site-copy"><span class="webgis-site-category">${escapeHtml(site.catLabel)}</span><strong>${escapeHtml(site.name)}</strong><span class="webgis-site-address">${escapeHtml(site.addr)}</span></span>
+      <span class="webgis-row-mark" aria-hidden="true">↗</span>
+    </button>`).join('');
+  webgisSiteList.querySelectorAll('.webgis-site-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const index = Number(row.dataset.siteIndex);
+      if (typeof window.focusSiteOnMap === 'function') window.focusSiteOnMap(index);
+    });
+  });
+}
+
 function renderSites(filter='all') {
+  activeSiteFilter = filter;
+  const query = siteSearchInput ? siteSearchInput.value : '';
+  const items = filterSiteData(filter, query);
   sitesGrid.innerHTML = '';
-  const filtered = filter==='all' ? sites : sites.filter(s=>s.category===filter);
-  filtered.forEach(s => {
+  items.forEach(({site:s}) => {
     const card = document.createElement('div'); card.className='site-card';
     card.innerHTML = `
       <div class="site-card-img" style="background:linear-gradient(135deg, ${s.category==='landmark'?'#8B0000':s.category==='uprising'?'#5D3A1A':s.category==='battle'?'#4a4a4a':s.category==='station'?'#2c3e50':s.category==='tomb'?'#1a3a1a':'#3a2a1a'}, ${s.category==='landmark'?'#c41e3a':s.category==='uprising'?'#8B6914':s.category==='battle'?'#777':s.category==='station'?'#507192':s.category==='tomb'?'#3a6a3a':'#6a5a3a'});">
-        <img src="images/${s.img}.jpg" alt="${s.name}" loading="lazy" onerror="this.style.display='none'">
+        <img src="${IMAGE_URLS[`${s.img}.jpg`]}" alt="${s.name}" loading="lazy" onerror="this.style.display='none'">
         <span class="img-placeholder" style="color:rgba(255,255,255,0.75);">📷 ${s.name}</span>
       </div>
       <div class="site-card-body">
@@ -161,19 +200,37 @@ function renderSites(filter='all') {
       </div>`;
     sitesGrid.appendChild(card);
   });
+  renderWebgisList(items);
+  if (webgisCount) webgisCount.textContent = `${items.length} / ${sites.length}`;
 }
 renderSites();
 document.querySelectorAll('.site-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.site-tab').forEach(t=>t.classList.remove('active'));
     tab.classList.add('active');
+    document.querySelectorAll('.site-tab').forEach(t => t.setAttribute('aria-pressed', String(t === tab)));
     var filter = tab.dataset.filter;
     renderSites(filter);
     // 同步筛选地图标记
     if (typeof filterMapMarkers === 'function') {
-      filterMapMarkers(filter);
+      filterMapMarkers(filter, siteSearchInput ? siteSearchInput.value : '');
     }
   });
+});
+
+if (siteSearchInput) {
+  siteSearchInput.addEventListener('input', () => {
+    const clearButton = document.getElementById('siteSearchClear');
+    if (clearButton) clearButton.hidden = siteSearchInput.value.length === 0;
+    renderSites(activeSiteFilter);
+    if (typeof filterMapMarkers === 'function') filterMapMarkers(activeSiteFilter, siteSearchInput.value);
+  });
+}
+const siteSearchClear = document.getElementById('siteSearchClear');
+if (siteSearchClear) siteSearchClear.addEventListener('click', () => {
+  siteSearchInput.value = '';
+  siteSearchInput.dispatchEvent(new Event('input', { bubbles: true }));
+  siteSearchInput.focus();
 });
 
 /* ==================== HEROES SEARCH ==================== */
@@ -438,7 +495,7 @@ const tourismGrid = document.getElementById('tourismGrid');
 tourismItems.forEach(item => {
   const card = document.createElement('div'); card.className = 'tourism-card';
   card.innerHTML = `
-    <div class="tourism-card-img" style="background-image:url('images1/${item.bgImg}.jpg');background-size:cover;background-position:center;"></div>
+    <div class="tourism-card-img" style="background-image:url('${IMAGE_URLS[`${item.bgImg}.jpg`]}');background-size:cover;background-position:center;"></div>
     <div class="tourism-card-body">
       <h4>${item.title}</h4>
       <p>${item.desc}</p>
@@ -462,28 +519,23 @@ tourismItems.forEach(item => {
     residence: '#8E44AD'
   };
 
-  // 创建彩色圆形标记图标
+  // 分类图钉：颜色对应图例，单字便于在缩放后快速识别类别
+  var catGlyphs = { landmark: '地', uprising: '暴', battle: '战', station: '驻', tomb: '陵', residence: '居' };
   function markerIcon(category) {
     var color = catColors[category] || '#999';
     return L.divIcon({
       className: 'custom-marker',
-      html: '<div style="'
-          + 'background:' + color + ';'
-          + 'width:22px;height:22px;'
-          + 'border-radius:50%;'
-          + 'border:3px solid #fff;'
-          + 'box-shadow:0 2px 6px rgba(0,0,0,0.35);'
-          + '"></div>',
-      iconSize:   [22, 22],
-      iconAnchor: [11, 11],
-      popupAnchor:[0, -11]
+      html: '<span class="map-pin" style="--pin-color:' + color + '"><i>' + (catGlyphs[category] || '址') + '</i></span>',
+      iconSize: [30, 37],
+      iconAnchor: [15, 34],
+      popupAnchor: [0, -32]
     });
   }
 
   // 构建弹窗 HTML（XSS 安全：使用 escapeHtml）
   function popupHTML(site) {
     return '<div class="site-popup">'
-         + '<img src="images/' + escapeHtml(site.img) + '.jpg" alt="' + escapeHtml(site.name) + '" class="site-popup-img" loading="lazy">'
+         + '<img src="' + IMAGE_URLS[escapeHtml(site.img) + '.jpg'] + '" alt="' + escapeHtml(site.name) + '" class="site-popup-img" loading="lazy">'
          + '<h5>' + escapeHtml(site.name) + '</h5>'
          + '<span class="popup-tag">' + escapeHtml(site.catLabel) + '</span>'
          + '<div class="popup-addr">📍 ' + escapeHtml(site.addr) + '</div>'
@@ -498,20 +550,53 @@ tourismItems.forEach(item => {
     zoomControl: true
   });
 
-  // 高德地图瓦片（国内访问快，无需 API Key；如需切换回 OSM 见下方注释）
-  L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+  // 双底图由高德公开瓦片提供；图钉沿用项目整理的位置示意坐标。
+  var streetLayer = L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
     subdomains: ['1', '2', '3', '4'],
     attribution: '&copy; <a href="https://www.amap.com/">高德地图</a>',
     maxZoom: 18
   }).addTo(map);
+  var satelliteLayer = L.tileLayer('https://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}', {
+    subdomains: ['1', '2', '3', '4'],
+    attribution: '&copy; <a href="https://www.amap.com/">高德地图</a>',
+    maxZoom: 18
+  });
+  var activeBaseLayer = streetLayer;
+  var layerCaption = document.getElementById('mapLayerCaption');
+  document.querySelectorAll('[data-map-layer]').forEach(function(button) {
+    button.addEventListener('click', function() {
+      var satellite = button.dataset.mapLayer === 'satellite';
+      if (activeBaseLayer) map.removeLayer(activeBaseLayer);
+      activeBaseLayer = satellite ? satelliteLayer : streetLayer;
+      activeBaseLayer.addTo(map);
+      document.querySelectorAll('[data-map-layer]').forEach(function(item) {
+        var selected = item === button;
+        item.classList.toggle('is-active', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+      if (layerCaption) layerCaption.textContent = (satellite ? '卫星影像' : '街道地图') + ' · 遗址位置示意';
+    });
+  });
 
-  /*
-   * 备选瓦片源（如需切换回 OpenStreetMap）：
-   * L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-   *   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-   *   maxZoom: 18
-   * }).addTo(map);
-   */
+  var fullscreenBtn = document.getElementById('mapFullscreenBtn');
+  var mapFrame = mapEl.closest('.webgis-map-frame');
+  function syncFullscreen() {
+    var isFullscreen = document.fullscreenElement === mapFrame;
+    if (fullscreenBtn) {
+      fullscreenBtn.textContent = isFullscreen ? '退出全屏' : '全屏';
+      fullscreenBtn.setAttribute('aria-label', isFullscreen ? '退出地图全屏' : '全屏查看地图');
+    }
+    window.setTimeout(function() { map.invalidateSize(); }, 120);
+  }
+  if (fullscreenBtn && mapFrame && mapFrame.requestFullscreen) {
+    fullscreenBtn.addEventListener('click', function() {
+      if (document.fullscreenElement === mapFrame) document.exitFullscreen();
+      else mapFrame.requestFullscreen();
+    });
+    document.addEventListener('fullscreenchange', syncFullscreen);
+  } else if (fullscreenBtn) {
+    fullscreenBtn.hidden = true;
+  }
 
   // Ctrl/Cmd + 滚轮缩放地图
   mapEl.addEventListener('wheel', function(e) {
@@ -529,6 +614,9 @@ tourismItems.forEach(item => {
     var icon = markerIcon(site.category);
     var marker = L.marker([site.lat, site.lng], { icon: icon })
       .bindPopup(popupHTML(site));
+    var tooltip = document.createElement('span');
+    tooltip.textContent = site.name;
+    marker.bindTooltip(tooltip, { direction: 'top', offset: [0, -29], opacity: 1 });
     allMarkers.push({ marker: marker, site: site, idx: idx });
   });
 
@@ -548,25 +636,29 @@ tourismItems.forEach(item => {
   var resetBtn = document.getElementById('mapResetBtn');
 
   // 筛选地图标记的函数（供标签切换调用）
-  window.filterMapMarkers = function(filter) {
+  window.filterMapMarkers = function(filter, query) {
+    var normalizedQuery = (query || '').trim().toLocaleLowerCase();
+    function matches(entry) {
+      var categoryMatch = filter === 'all' || entry.site.category === filter;
+      var haystack = [entry.site.name, entry.site.catLabel, entry.site.addr, entry.site.desc].join(' ').toLocaleLowerCase();
+      return categoryMatch && (!normalizedQuery || haystack.indexOf(normalizedQuery) !== -1);
+    }
     allMarkers.forEach(function(entry) {
-      if (filter === 'all' || entry.site.category === filter) {
+      if (matches(entry)) {
         if (!map.hasLayer(entry.marker)) entry.marker.addTo(map);
       } else {
         if (map.hasLayer(entry.marker)) map.removeLayer(entry.marker);
       }
     });
     // 重新自适应视野
-    var visible = allMarkers.filter(function(e) {
-      return filter === 'all' || e.site.category === filter;
-    }).map(function(e) { return e.marker; });
+    var visible = allMarkers.filter(matches).map(function(e) { return e.marker; });
     if (visible.length > 0) {
       var grp = L.featureGroup(visible);
       map.fitBounds(grp.getBounds().pad(0.08), { maxZoom: 16 });
     }
     // 切换"查看全部"按钮
     if (resetBtn) {
-      resetBtn.style.display = (filter === 'all') ? 'none' : 'inline-block';
+      resetBtn.hidden = filter === 'all' && !normalizedQuery;
     }
   };
 
@@ -577,13 +669,40 @@ tourismItems.forEach(item => {
       if (!map.hasLayer(e.marker)) e.marker.addTo(map);
     });
     fitAllMarkers();
-    if (resetBtn) resetBtn.style.display = 'none';
+    if (resetBtn) resetBtn.hidden = true;
+    if (siteSearchInput) siteSearchInput.value = '';
+    var clearButton = document.getElementById('siteSearchClear');
+    if (clearButton) clearButton.hidden = true;
     // 同时重置遗址卡片筛选
     document.querySelectorAll('.site-tab').forEach(function(t) { t.classList.remove('active'); });
     var allTab = document.querySelector('.site-tab[data-filter="all"]');
+    document.querySelectorAll('.site-tab').forEach(function(t) { t.setAttribute('aria-pressed', String(t === allTab)); });
     if (allTab) allTab.classList.add('active');
     if (typeof renderSites === 'function') renderSites('all');
   };
+
+  window.focusSiteOnMap = function(index) {
+    var entry = allMarkers.find(function(item) { return item.idx === index; });
+    if (!entry) return;
+    map.flyTo([entry.site.lat, entry.site.lng], 16, { duration: .55 });
+    entry.marker.openPopup();
+    document.querySelectorAll('.webgis-site-row').forEach(function(row) {
+      row.classList.toggle('is-active', Number(row.dataset.siteIndex) === index);
+    });
+    if (window.innerWidth <= 760) mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+  allMarkers.forEach(function(entry) {
+    entry.marker.on('popupopen', function() {
+      if (entry.marker.getElement()) entry.marker.getElement().classList.add('is-active');
+      document.querySelectorAll('.webgis-site-row').forEach(function(row) {
+        row.classList.toggle('is-active', Number(row.dataset.siteIndex) === entry.idx);
+      });
+    });
+    entry.marker.on('popupclose', function() {
+      if (entry.marker.getElement()) entry.marker.getElement().classList.remove('is-active');
+    });
+  });
+  if (resetBtn) resetBtn.addEventListener('click', window.resetMapView);
 
   // 生成图例
   var legendEl = document.getElementById('mapLegend');
@@ -598,7 +717,7 @@ tourismItems.forEach(item => {
                 + (catNames[cat] || cat)
                 + '</div>';
   }
-  legendEl.innerHTML = legendHTML;
+  legendEl.innerHTML = '<span class="map-legend-title">图例</span>' + legendHTML;
 
   // 修复地图尺寸（窗口大小变化 / 滚动到地图区域时）
   window.addEventListener('resize', function() {
