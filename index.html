@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#761f1c">
+<meta name="description" content="走进安徽金寨吴家店，循着立夏节起义的历史印迹，了解革命旧址、英烈故事与大别山研学路线。">
 <title>吴家店镇 · 红色文化宣传网</title>
 <link rel="stylesheet" href="san.css">
+<link rel="stylesheet" href="visual-refresh.css">
 <!-- Leaflet CSS（交互地图，unpkg 失败时自动降级国内 CDN） -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       onerror="this.onerror=null;this.href='https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.css'" />
@@ -30,7 +33,7 @@
 </nav>
 
 <!-- ==================== HOME / HERO ==================== -->
-<section class="hero" id="home">
+<section class="hero" id="home" style="--hero-image:url('https://meng-xun-image-host.oss-cn-shanghai.aliyuncs.com/img/chuanshi-temple.jpg')">
   <div class="hero-content">
     <div class="hero-badge">★ 安徽省优秀旅游乡镇 ★</div>
     <h1>红色吴家店</h1>
@@ -85,7 +88,7 @@
     </div>
 
     <!-- 穿石庙会议专题 -->
-    <div style="background:var(--white);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);margin-bottom:40px;">
+    <div class="origin-meeting-panel" style="background:var(--white);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);margin-bottom:40px;">
       <h3 style="color:var(--red-main);font-size:1.4rem;margin-bottom:20px;text-align:center;">📜 穿石庙会议（1929年5月2日）</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
         <div>
@@ -162,11 +165,11 @@
     <!-- Image Carousel -->
     <div class="carousel-wrapper" id="siteCarousel">
       <div class="carousel-main" id="siteCarouselMain">
-        <img src="images/chuanshi-temple.jpg" alt="穿石庙旧址" class="active" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <img src="https://meng-xun-image-host.oss-cn-shanghai.aliyuncs.com/img/chuanshi-temple.jpg" alt="穿石庙旧址" class="active" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
 	        <div class="carousel-placeholder active" style="background:linear-gradient(135deg,#8B0000,#c41e3a);"><span class="ph-icon">🏛️</span>穿石庙旧址<span style="font-size:0.8rem;opacity:0.7;">国家级文物保护单位</span></div>
-	        <img src="images/meeting-table.jpg" alt="穿石庙会议桌" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+	        <img src="https://meng-xun-image-host.oss-cn-shanghai.aliyuncs.com/img/meeting-table.jpg" alt="穿石庙会议桌" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
 	        <div class="carousel-placeholder" style="background:linear-gradient(135deg,#744418,#8B6914);"><span class="ph-icon">🪑</span>穿石庙会议桌<span style="font-size:0.8rem;opacity:0.7;">1929年5月2日紧急会议文物</span></div>
-	        <img src="images/martyr-monument.jpg" alt="烈士纪念碑" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+	        <img src="https://meng-xun-image-host.oss-cn-shanghai.aliyuncs.com/img/martyr-monument.jpg" alt="烈士纪念碑" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
 	        <div class="carousel-placeholder" style="background:linear-gradient(135deg,#333,#555);"><span class="ph-icon">🪦</span>立夏节起义革命烈士纪念碑<span style="font-size:0.8rem;opacity:0.7;">吴家店镇·烈士纪念设施</span></div>
       </div>
       <button class="carousel-btn prev" id="carouselPrev">◀</button>
@@ -175,7 +178,7 @@
     </div>
 
     <!-- 历史意义 -->
-    <div style="background:linear-gradient(135deg,var(--red-deep),var(--red-main));color:var(--white);padding:30px;border-radius:var(--radius);margin-top:40px;text-align:center;">
+    <div class="history-significance" id="history-significance" style="background:linear-gradient(135deg,var(--red-deep),var(--red-main));color:var(--white);padding:30px;border-radius:var(--radius);margin-top:40px;text-align:center;">
       <h3 style="font-size:1.3rem;margin-bottom:14px;">🌟 历史意义</h3>
       <p style="font-size:1rem;max-width:800px;margin:0 auto;line-height:1.9;">
         立夏节起义是<strong>鄂豫皖边区首次取得全面胜利的武装起义</strong>，是<strong>豫东南革命根据地的起点</strong>。它成功地以最小的代价瓦解了商南地区的反动武装，创建了红32师——鄂豫皖边区第一支正规红军队伍。穿石庙会议作为起义的决策原点，见证了革命先辈在危急关头的英明决断，在中国革命史上留下了不可磨灭的印记。
@@ -209,31 +212,66 @@
       <div class="divider"></div>
     </div>
 
-    <!-- Filter Tabs -->
-    <div class="site-tabs" id="siteTabs">
-      <button class="site-tab active" data-filter="all">全部遗址</button>
-      <button class="site-tab" data-filter="landmark">核心地标</button>
-      <button class="site-tab" data-filter="uprising">暴动与组织旧址</button>
-      <button class="site-tab" data-filter="battle">战斗遗址</button>
-      <button class="site-tab" data-filter="station">驻地旧址</button>
-      <button class="site-tab" data-filter="tomb">烈士墓园</button>
-      <button class="site-tab" data-filter="residence">名人故居</button>
-    </div>
-
-    <!-- Sites Grid -->
-    <div class="sites-grid" id="sitesGrid">
-      <!-- Generated by JS -->
-    </div>
-
-    <!-- Interactive Map -->
-    <div id="sites-map-container">
-      <h4>📍 吴家店镇红色遗址分布图（交互地图）
-        <button id="mapResetBtn" class="btn btn-red" style="display:none;font-size:0.8rem;padding:6px 16px;margin-left:12px;vertical-align:middle;letter-spacing:0;">查看全部遗址</button>
-      </h4>
-      <div id="sites-map"></div>
-      <div class="map-legend" id="mapLegend">
-        <!-- Generated by JS -->
+    <!-- WebGIS Explorer -->
+    <div class="webgis-shell" id="sites-map-container">
+      <aside class="webgis-sidebar" aria-label="遗址筛选与列表">
+        <div class="webgis-sidebar-head">
+          <span class="webgis-eyebrow">吴家店 · 红色地理档案</span>
+          <h3>沿着地图，<br>读懂这片土地</h3>
+          <p>按类别浏览革命遗址，选择地点查看分布与历史信息。</p>
+        </div>
+        <label class="webgis-search-label" for="siteSearch">搜索遗址</label>
+        <div class="webgis-search-wrap">
+          <span aria-hidden="true">⌕</span>
+          <input id="siteSearch" type="search" placeholder="名称、村落或关键词" autocomplete="off">
+          <button id="siteSearchClear" type="button" aria-label="清除搜索" hidden>×</button>
+        </div>
+        <div class="site-tabs" id="siteTabs" role="group" aria-label="按遗址类别筛选">
+          <button class="site-tab active" data-filter="all" aria-pressed="true">全部</button>
+          <button class="site-tab" data-filter="landmark" aria-pressed="false">核心地标</button>
+          <button class="site-tab" data-filter="uprising" aria-pressed="false">暴动旧址</button>
+          <button class="site-tab" data-filter="battle" aria-pressed="false">战斗遗址</button>
+          <button class="site-tab" data-filter="station" aria-pressed="false">驻地旧址</button>
+          <button class="site-tab" data-filter="tomb" aria-pressed="false">烈士墓园</button>
+          <button class="site-tab" data-filter="residence" aria-pressed="false">名人故居</button>
+        </div>
+        <div class="webgis-list-heading">
+          <strong>遗址名录</strong>
+          <span id="webgisCount" aria-live="polite">—</span>
+        </div>
+        <div class="webgis-site-list" id="webgisSiteList" aria-label="地图遗址列表"></div>
+      </aside>
+      <div class="webgis-map-panel">
+        <div class="webgis-map-toolbar">
+          <div>
+            <span class="webgis-map-kicker">INTERACTIVE MAP</span>
+            <h3>吴家店镇红色遗址分布</h3>
+          </div>
+          <div class="webgis-map-actions">
+            <span class="webgis-map-hint">点击图钉查看遗址</span>
+            <div class="map-layer-switch" role="group" aria-label="选择地图底图">
+              <button type="button" class="is-active" data-map-layer="street" aria-pressed="true">街道</button>
+              <button type="button" data-map-layer="satellite" aria-pressed="false">卫星</button>
+            </div>
+            <button id="mapFullscreenBtn" class="map-utility-btn" type="button" aria-label="全屏查看地图">全屏</button>
+            <button id="mapResetBtn" class="map-reset-btn" type="button" hidden>重置地图</button>
+          </div>
+        </div>
+        <div class="webgis-map-frame">
+          <div id="sites-map" aria-label="吴家店镇红色遗址交互地图"></div>
+          <div class="map-corner-note"><span class="map-live-dot"></span><span id="mapLayerCaption">街道地图 · 遗址位置示意</span></div>
+        </div>
+        <div class="map-legend" id="mapLegend" aria-label="遗址类别图例"></div>
+        <p class="webgis-map-footnote">地图标注依据项目整理的地点坐标，用于红色文化与研学路线浏览。</p>
       </div>
+    </div>
+
+    <div class="archive-heading">
+      <div><span class="webgis-eyebrow">SITE ARCHIVE</span><h3>遗址图文索引</h3></div>
+      <p>从地图进入现场，也可以按图文继续了解每处遗址。</p>
+    </div>
+    <div class="sites-grid" id="sitesGrid" aria-live="polite">
+      <!-- Generated by JS -->
     </div>
   </div>
 </section>
@@ -433,6 +471,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         onerror="this.onerror=null;var s=document.createElement('script');s.src='https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.js';s.onerror=function(){var el=document.getElementById('sites-map');if(el)el.innerHTML='<p style=text-align:center;padding:60px;color:#999>⚠️ 地图组件加载失败，请刷新页面重试</p>'};document.head.appendChild(s)"></script>
 
+<script src="image-urls.js"></script>
 <script src="san.js"></script>
 </body>
 </html>
